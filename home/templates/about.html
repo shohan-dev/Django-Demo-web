@@ -1,0 +1,21 @@
+{% extends "./base.html" %}
+
+{%block content%}
+
+<h1>About Us</h1>
+    <p>Meet our team:</p>
+    <ul>
+        {% for name in names %}
+            <li>{{ name }}</li>
+        {% endfor %}
+    </ul>
+    {% comment %} if names has named shohan then show it or else dont {% endcomment %}
+    {% if names|length > 0 %}
+    <p>We have {{ names|length }} people in our team.</p>
+    {% else %}
+    <p>We have no people in our team.</p>
+    {% endif %}
+
+    
+<h1>Contact Us</h1>
+{% endblock %}
