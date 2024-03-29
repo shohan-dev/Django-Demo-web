@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect,HttpResponse
 from .models import Student
 
 def student_s(request):
@@ -26,3 +26,16 @@ def student_s(request):
             return redirect("/")
 
     return render(request, 'student.html')
+
+def table(request):
+    data = Student.objects.all()
+    context = {"data":data}
+    return render(request, 'table.html',context)
+
+def delete_txt(request,id):
+    print(id)
+    delete = Student.objects.get(id=id)
+    delete.delete() 
+    return redirect("/table")
+
+

@@ -11,5 +11,7 @@ urlpatterns = [
     path('', home),
     path("about", about),
     path("student", student_s),
+    path("table", table),
+    path("delete_txt_table/<int:id>", delete_txt),
     path('admin/', admin.site.urls),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
