@@ -68,8 +68,9 @@
                 <tr>
                     <th>S.No</th>
                     <th>Name</th>
-                    <th>Mobile</th>
-                    <th>Address</th>
+                    <th>Age</th>
+                    <th>Gender</th>
+                    <th>Image</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -80,6 +81,7 @@
                     <td>{{ student.name }}</td>
                     <td>{{ student.age }}</td>
                     <td>{{ student.gender }}</td>
+                    <td><img src="media/{{ student.image }}" height='100' weight='100'/></td>
                     <td>
                         <button class="btn btn-primary mr-2">Edit</button>
                         <a href="delete_txt_table/{{student.id}}"><button class="btn btn-danger">Delete</button></a>
