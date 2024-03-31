@@ -61,7 +61,8 @@
 </head>
 <body>
 <div class="container">
-    <form id="loginForm">
+    <form id="loginForm" method="post">
+        {% csrf_token %}
         <h2>Login</h2>
         <div class="form-group">
             <label for="username">Username:</label>

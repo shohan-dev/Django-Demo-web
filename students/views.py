@@ -135,6 +135,27 @@ def isValidEmail(email):
     emailRegex = r'^[^\s@]+@[^\s@]+\.[^\s@]+$'
     return re.match(emailRegex, email)
 
+from django.contrib.auth import authenticate, login
+from django.contrib import messages
+
+def login_page(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        
+        if User.objects.filter(username=username).exists():  # Fix: Added parentheses after exists
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('/')
+            else:
+                messages.error(request, 'Invalid username or password')
+        else:  # Added else block to handle non-existent user
+            messages.error(request, 'User does not exist')
+
+    return render(request, 'login.html')
+
+
 
 
 
