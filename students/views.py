@@ -1,5 +1,10 @@
 from django.shortcuts import render, redirect,HttpResponse
 from .models import Student
+from django.contrib.auth.models import User
+from django.contrib import messages
+import time
+import re
+
 
 def student_s(request):
     if request.method == 'POST':
@@ -72,6 +77,66 @@ def update_table(request, id):
 
     context = {"data": data}
     return render(request, 'update_table.html', context)
+
+
+
+def login(request):
+    return render(request,'login.html')
+
+
+
+
+from django.contrib import messages
+from django.shortcuts import render, redirect
+from django.contrib.auth.models import User
+
+def register(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        username = request.POST.get('username')
+
+        # Simple validation
+        errors = {}
+        if not name:
+            errors['name'] = 'Name is required'
+        if not username:
+            errors['username'] = 'Username is required'
+        elif User.objects.filter(username=username).exists():
+            errors['username'] = 'Username already exists. Please choose a different username.'
+        if not email:
+            errors['email'] = 'Email is required'
+        elif not isValidEmail(email):
+            errors['email'] = 'Invalid email format'
+        if not password:
+            errors['password'] = 'Password is required'
+        if password != request.POST.get('confirm_password'):
+            errors['confirm_password'] = 'Passwords do not match'
+
+        if errors:
+            return render(request, 'register.html', {'errors': errors, 'data': request.POST})
+
+
+        # Create user object with provided information
+        user = User.objects.create_user(first_name=name, username=username, email=email, password=password)
+        
+        # Save user object to database
+        user.save()
+
+        messages.success(request, 'Registration successful!')
+        return redirect('/login')
+
+    # Render registration form for GET requests
+    return render(request, 'register.html')
+
+def isValidEmail(email):
+    # Simple email validation regex
+    emailRegex = r'^[^\s@]+@[^\s@]+\.[^\s@]+$'
+    return re.match(emailRegex, email)
+
+
+
 
 
 

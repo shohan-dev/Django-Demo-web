@@ -11,6 +11,8 @@ urlpatterns = [
     path('', home),
     path("about", about),
     path("student", student_s),
+    path("login", login),
+    path("register", register),
     path("table", table),
     path("delete_txt_table/<int:id>", delete_txt),
     path("update_table/<int:id>", update_table),
