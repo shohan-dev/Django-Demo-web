@@ -1,12 +1,24 @@
-from django.shortcuts import render, redirect,HttpResponse
+# views.py
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect, HttpResponse
 from .models import Student
 from django.contrib.auth.models import User
 from django.contrib import messages
-import time
 import re
+from django.contrib.auth import logout
 
 
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from .models import Student
+
+@login_required(login_url='/login/')  # Specify the login URL
 def student_s(request):
+    # Check if the user is authenticated
+    if not request.user.is_authenticated:
+        return redirect('/login/')  # Redirect to the login page if not logged in
+    
+    # Proceed with the view logic if the user is authenticated
     if request.method == 'POST':
         # Ensure the form has the 'enctype="multipart/form-data"' attribute
         # in the HTML template where you're rendering the form.
@@ -29,26 +41,24 @@ def student_s(request):
             new_student.save()
 
             return redirect("/")
-
     return render(request, 'student.html')
 
+
+
+@login_required(login_url='/login/')  # Specify the login URL
 def table(request):
     data = Student.objects.all()
-    context = {"data":data}
-    return render(request, 'table.html',context)
+    context = {"data": data}
+    return render(request, 'table.html', context)
 
-def delete_txt(request,id):
+@login_required(login_url='/login/')  # Specify the login URL
+def delete_txt(request, id):
     print(id)
     delete = Student.objects.get(id=id)
     delete.delete() 
     return redirect("/table")
 
-# def update_table(request,id,s_name,s_age,s_gender,s_image):
-    
-    
-#     Student.objects.update(name=s_name, age=s_age, gender=s_gender, image=s_image) 
-#     return redirect("/table")
-
+@login_required(login_url='/login/')  # Specify the login URL
 def update_table(request, id):
     try:
         data = Student.objects.get(id=id)
@@ -78,17 +88,9 @@ def update_table(request, id):
     context = {"data": data}
     return render(request, 'update_table.html', context)
 
-
-
 def login(request):
     return render(request,'login.html')
 
-
-
-
-from django.contrib import messages
-from django.shortcuts import render, redirect
-from django.contrib.auth.models import User
 
 def register(request):
     if request.method == 'POST':
@@ -136,7 +138,6 @@ def isValidEmail(email):
     return re.match(emailRegex, email)
 
 from django.contrib.auth import authenticate, login
-from django.contrib import messages
 
 def login_page(request):
     if request.method == 'POST':
@@ -155,9 +156,6 @@ def login_page(request):
 
     return render(request, 'login.html')
 
-
-
-
-
-
-
+def logout_page(request):
+    logout(request)
+    return redirect('/login')

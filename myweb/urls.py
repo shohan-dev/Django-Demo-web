@@ -5,16 +5,15 @@ from django.conf.urls.static import static
 from home.views import *
 from students.views import *
 
-# add the static line
-
 urlpatterns = [
     path('', home),
-    path("about", about),
-    path("student", student_s),
-    path("register", register),
-    path("login", login_page),
-    path("table", table),
-    path("delete_txt_table/<int:id>", delete_txt),
-    path("update_table/<int:id>", update_table),
+    path("about/", about),  # Add trailing slashes to all paths
+    path("student/", student_s),
+    path("register/", register),
+    path("login/", login_page),  # Add trailing slash here
+    path("logout/", logout_page),  # Add trailing slashes to all paths
+    path("table/", table),
+    path("delete_txt_table/<int:id>/", delete_txt),  # Add trailing slash here
+    path("update_table/<int:id>/", update_table),  # Add trailing slash here
     path('admin/', admin.site.urls),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
