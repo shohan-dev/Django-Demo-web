@@ -17,6 +17,7 @@ urlpatterns = [
     path("about/", about),  # Add trailing slashes to all paths
     path("student/", student_s),
     path("register/", register),
+    path("email/", send_mail_from_user),
     path("login/", login_page),  # Add trailing slash here
     path("logout/", logout_page),  # Add trailing slashes to all paths
     path("table/", table),

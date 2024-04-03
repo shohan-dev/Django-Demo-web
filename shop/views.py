@@ -1,6 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.core.paginator import Paginator
 from shop.models import Product
+from django.core.mail import send_mail
+
 
 def get_data(request):
     # Fetch all products
@@ -19,3 +21,27 @@ def get_data(request):
     data = paginator.get_page(page_number)
 
     return render(request, 'product.html', {'page_obj': data})
+
+
+# subject = 'Subject of the Email'
+# message = 'This is the message body.'
+# from_email = 'sabbirshohan80@gmail.com'  
+# to_email = 'shohanplayer100@gmail.com'  
+
+# send_mail(subject, message, from_email, [to_email])
+
+
+def send_mail_from_user(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        subject = request.POST.get('subject')
+        message = request.POST.get('message')
+        from_email = request.POST.get('from_email')
+        to_email = request.POST.get('to_email')
+        send_mail(subject, message, from_email, [to_email])
+        return redirect('/', {'name': name, 'email': email})  # Corrected redirect usage
+    else:
+        return render(request, 'email.html')
+
+
