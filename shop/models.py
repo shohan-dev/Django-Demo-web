@@ -7,3 +7,5 @@ class Product(models.Model):
     price = models.IntegerField()
     image = models.ImageField()
     file = models.FileField()
+    def __str__(self):
+        return self.name
