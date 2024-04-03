@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'jazzmin', # added addtional for a new admin panel look new design style
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -43,6 +44,7 @@ INSTALLED_APPS = [
 EXTERNAL_APP = [
     'app_name',
     'home',
+    'shop',
     'students'
 
 ]

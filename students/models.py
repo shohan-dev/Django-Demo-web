@@ -7,3 +7,11 @@ class Student(models.Model):
     age = models.IntegerField()
     gender = models.CharField(max_length=10)
     image = models.ImageField(upload_to='img/', null=True, blank=True)  # Remove the NOT NULL constraint temporarily
+
+
+    
+class Test_Product(models.Model):
+    name = models.CharField(max_length=100)
+    price = models.IntegerField()
+    discount = models.IntegerField()
+    description = models.TextField()
