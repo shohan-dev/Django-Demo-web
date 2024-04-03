@@ -69,19 +69,19 @@
                     <th>S.No</th>
                     <th>Name</th>
                     <th>Age</th>
-                    <th>Gender</th>
                     <th>Image</th>
+                    <th>File</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
-                {% for student in data %}
+                {% for student in page_obj %}
                 <tr>
                     <td>{{ forloop.counter }}</td>
                     <td>{{ student.name }}</td>
-                    <td>{{ student.price }}</td>
-                    <td><img src="media/{{ student.image }}" height='100' weight='100'/></td>
-                    <td><img src="media/{{ student.file }}" height='100' weight='100'/></td>
+                    <td>{{ student.age }}</td>
+                    <td><img src="{{ student.image.url }}" height='100' width='100'></td>
+                    <td><img src="{{ student.file.url }}" height='100' width='100'></td>
                     <td>
                         <a href="update_table/{{student.id}}"><button class="btn btn-primary mr-2">Edit</button></a>
                         <a href="delete_txt_table/{{student.id}}"><button class="btn btn-danger">Delete</button></a>
@@ -89,8 +89,30 @@
                 </tr>
                 {% endfor %}
             </tbody>
-            
         </table>
+       <!-- Pagination -->
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+        {% if page_obj.has_previous %}
+        <li class="page-item"><a class="page-link" href="?page=1">First</a></li>
+        <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a></li>
+        {% endif %}
+        {% for num in page_obj.paginator.page_range %}
+            {% if page_obj.number == num %}
+                <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+            {% else %}
+                {% if num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                    <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+        {% if page_obj.has_next %}
+        <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a></li>
+        <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Last</a></li>
+        {% endif %}
+    </ul>
+</nav>
+
     </div>
 </div>
 
