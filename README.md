@@ -1,1 +1,1 @@
-Start Project:  python -m django startproject mysite
+Start Project:  python -m django startproject myweb
