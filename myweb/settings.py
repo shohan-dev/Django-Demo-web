@@ -48,7 +48,8 @@ EXTERNAL_APP = [
     'home',
     'shop',
     'students',
-    'inharit_data'
+    'inharit_data',
+    'api_send_get'
 
 ]
 
