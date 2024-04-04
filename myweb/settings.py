@@ -47,7 +47,8 @@ EXTERNAL_APP = [
     'app_name',
     'home',
     'shop',
-    'students'
+    'students',
+    'inharit_data'
 
 ]
 
@@ -153,7 +154,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # settings.py
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'  # Your SMTP server address
+EMAIL_HOST = 'smtp.gmail.com'  # Your SMTP server address   
 EMAIL_PORT = 587  # Your SMTP server port (usually 587 for TLS)
 EMAIL_USE_TLS = True  # Whether to use TLS for secure connection
 EMAIL_HOST_USER = 'sabbirshohan80@gmail.com'  # Your SMTP username
