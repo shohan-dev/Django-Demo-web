@@ -31,6 +31,10 @@ def get_data(request):
 # send_mail(subject, message, from_email, [to_email])
 
 
+from django.shortcuts import redirect, render
+from django.core.mail import EmailMessage
+from django.http import HttpResponse
+
 def send_mail_from_user(request):
     if request.method == 'POST':
         name = request.POST.get('name')
@@ -39,9 +43,28 @@ def send_mail_from_user(request):
         message = request.POST.get('message')
         from_email = request.POST.get('from_email')
         to_email = request.POST.get('to_email')
-        send_mail(subject, message, from_email, [to_email])
-        return redirect('/', {'name': name, 'email': email})  # Corrected redirect usage
+        attached_file = request.FILES.get('file')  # Get the attached file
+        # Create EmailMessage instance
+        email_message = EmailMessage(
+            subject=subject,
+            body=message,
+            from_email=from_email,
+            to=[to_email],
+        )
+        # Attach the file, if provided
+        if attached_file:
+            email_message.attach(attached_file.name, attached_file.read(), attached_file.content_type)
+        try:
+            # Send email
+            email_message.send()
+            # Redirect to '/' on success
+            return redirect('/', {'name': name, 'email': email})
+        except Exception as e:
+            # If there's an error, render email.html with error message
+            return render(request, 'email.html', {'error': str(e)})
     else:
         return render(request, 'email.html')
+
+
 
 
